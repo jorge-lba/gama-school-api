@@ -30,10 +30,22 @@ class Test extends Entity<ITestProps> {
     return new Test(props, id);
   }
 
+  questionAlreadyExists(question: Question) {
+    const questionExists = this.questions.find((item) =>
+      item.equalsStatement(question)
+    );
+
+    if (questionExists) {
+      throw new Error(`Question "${question.statement}" already exists`);
+    }
+  }
+
   addQuestion(question: IAddQuestionProps): void {
     const newQuestion = Question.create({
       statement: question.statement,
     });
+
+    this.questionAlreadyExists(newQuestion);
 
     newQuestion.includeCorrectAlternatives(question.correctAlternatives);
     newQuestion.includeIncorrectAlternatives(question.incorrectAlternatives);
