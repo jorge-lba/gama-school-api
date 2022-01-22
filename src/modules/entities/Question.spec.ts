@@ -62,4 +62,21 @@ describe("Entity - Question", () => {
 
     expect(question.alternatives.length).toEqual(3);
   });
+
+  it("should be possible to add equal alternatives", () => {
+    const question = Question.create({
+      statement: "Question Remove Alternative",
+    });
+    question.includeCorrectAlternatives(["Alternative Correct 1"]);
+    const failAdd = () =>
+      question.includeIncorrectAlternatives([
+        "Alternative Correct 1",
+        "Alternative Incorrect 1",
+        "Alternative Incorrect 2",
+      ]);
+
+    expect(failAdd).toThrow(
+      'Alternative "Alternative Correct 1" already exists'
+    );
+  });
 });
