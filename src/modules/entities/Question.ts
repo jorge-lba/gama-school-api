@@ -66,6 +66,10 @@ class Question extends Entity<IQuestionProps> {
     );
     this.props.alternatives?.splice(index, 1);
   }
+
+  equalsStatement(question: Question): boolean {
+    return this.statement === question.statement;
+  }
 }
 
 export { Question };
