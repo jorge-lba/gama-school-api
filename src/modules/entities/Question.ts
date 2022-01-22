@@ -48,6 +48,13 @@ class Question extends Entity<IQuestionProps> {
     this.props.alternatives =
       this.props.alternatives?.concat(correctAlternatives);
   }
+
+  removeAlternative(alternative: Alternative): void {
+    const index = this.alternatives.findIndex((item) =>
+      item.alternative.equals(alternative)
+    );
+    this.props.alternatives?.splice(index, 1);
+  }
 }
 
 export { Question };
