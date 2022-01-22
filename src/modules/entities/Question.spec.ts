@@ -6,4 +6,10 @@ describe("Entity - Question", () => {
 
     expect(question.id).toEqual(expect.any(String));
   });
+
+  it("should be create a new question and contain a statement", () => {
+    const question = Question.create({ statement: "Question" });
+
+    expect(question.statement).toEqual("Question");
+  });
 });
