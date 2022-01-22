@@ -28,25 +28,23 @@ class Question extends Entity<IQuestionProps> {
     return new Question(props, id);
   }
 
-  includeIncorrectAlternatives(alternatives: string[]): void {
-    const incorrectAlternatives = alternatives.map((alternative) => ({
-      alternative: Alternative.create({ text: alternative }),
-      isCorrect: false,
-    }));
+  private includeAlternative(text: string, isCorrect: boolean): void {
+    this.props.alternatives?.push({
+      alternative: Alternative.create({ text }),
+      isCorrect,
+    });
+  }
 
-    this.props.alternatives = this.props.alternatives?.concat(
-      incorrectAlternatives
+  includeIncorrectAlternatives(alternatives: string[]): void {
+    alternatives.map((alternative) =>
+      this.includeAlternative(alternative, false)
     );
   }
 
   includeCorrectAlternatives(alternatives: string[]): void {
-    const correctAlternatives = alternatives.map((alternative) => ({
-      alternative: Alternative.create({ text: alternative }),
-      isCorrect: true,
-    }));
-
-    this.props.alternatives =
-      this.props.alternatives?.concat(correctAlternatives);
+    alternatives.map((alternative) =>
+      this.includeAlternative(alternative, true)
+    );
   }
 
   removeAlternative(alternative: Alternative): void {
