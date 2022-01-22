@@ -27,4 +27,23 @@ describe("Entity - Test", () => {
     expect(question.statement).toEqual("Question");
     expect(question.alternatives?.length).toEqual(3);
   });
+
+  it("should be possible to add equal questions", () => {
+    const test = Test.create({ title: "test" });
+
+    test.addQuestion({
+      statement: "Question",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    const addQuestion = () =>
+      test.addQuestion({
+        statement: "Question",
+        correctAlternatives: ["Alternative Correct"],
+        incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+      });
+
+    expect(addQuestion).toThrowError('Question "Question" already exists');
+  });
 });
