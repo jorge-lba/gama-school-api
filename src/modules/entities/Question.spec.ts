@@ -26,4 +26,21 @@ describe("Entity - Question", () => {
     expect(second.alternative.text).toEqual("Alternative 2");
     expect(second.isCorrect).toBeFalsy();
   });
+
+  it("should add correct alternatives in a question", () => {
+    const question = Question.create({ statement: "Question 2" });
+
+    question.includeCorrectAlternatives([
+      "Alternative Correct 1",
+      "Alternative Correct 2",
+    ]);
+
+    const [first, second] = question.alternatives;
+    expect(question.alternatives.length).toEqual(2);
+    expect(second.alternative.equals(first.alternative)).toBeFalsy();
+    expect(first.alternative.text).toEqual("Alternative Correct 1");
+    expect(first.isCorrect).toBeTruthy();
+    expect(second.alternative.text).toEqual("Alternative Correct 2");
+    expect(second.isCorrect).toBeTruthy();
+  });
 });
