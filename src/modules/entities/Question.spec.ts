@@ -43,4 +43,23 @@ describe("Entity - Question", () => {
     expect(second.alternative.text).toEqual("Alternative Correct 2");
     expect(second.isCorrect).toBeTruthy();
   });
+
+  it("should be remove alternative", () => {
+    const question = Question.create({
+      statement: "Question Remove Alternative",
+    });
+    question.includeCorrectAlternatives([
+      "Alternative Correct 1",
+      "Alternative Correct 2",
+    ]);
+    question.includeIncorrectAlternatives([
+      "Alternative Incorrect 1",
+      "Alternative Incorrect 2",
+    ]);
+    const alternatives = question.alternatives;
+
+    question.removeAlternative(alternatives[0].alternative);
+
+    expect(question.alternatives.length).toEqual(3);
+  });
 });
