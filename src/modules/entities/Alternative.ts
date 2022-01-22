@@ -16,6 +16,10 @@ class Alternative extends Entity<IAlternativeProps> {
   static create(props: IAlternativeProps, id?: string): Alternative {
     return new Alternative(props, id);
   }
+
+  equalsText(alternative: Alternative): boolean {
+    return this.text === alternative.text;
+  }
 }
 
 export { Alternative };
