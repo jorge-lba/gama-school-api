@@ -111,4 +111,26 @@ describe("Entity - Question", () => {
 
     expect(question.countIncorrectAlternatives()).toEqual(2);
   });
+
+  it("should get values from a question", () => {
+    const question = Question.create({
+      statement: "Question Remove Alternative",
+    });
+    question.includeCorrectAlternatives(["Alternative Correct 1"]);
+    question.includeIncorrectAlternatives(["Alternative Incorrect 1"]);
+
+    expect(question.values).toEqual({
+      statement: "Question Remove Alternative",
+      alternatives: [
+        {
+          text: "Alternative Correct 1",
+          isCorrect: true,
+        },
+        {
+          text: "Alternative Incorrect 1",
+          isCorrect: false,
+        },
+      ],
+    });
+  });
 });
