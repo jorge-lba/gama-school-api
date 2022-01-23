@@ -69,6 +69,10 @@ class Question extends Entity<IQuestionProps> {
   equalsStatement(question: Question): boolean {
     return this.statement === question.statement;
   }
+
+  countCorrectAlternatives(): number {
+    return this.alternatives.filter((item) => item.isCorrect).length;
+  }
 }
 
-export { Question };
+export { Question, IAlternativeProps };
