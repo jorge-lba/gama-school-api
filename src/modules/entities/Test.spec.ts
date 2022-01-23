@@ -69,4 +69,19 @@ describe("Entity - Test", () => {
     expect(test.questions?.length).toEqual(1);
     expect(question.statement).toEqual("Question 2");
   });
+
+  it("should list the alternatives of a question", () => {
+    const test = Test.create({ title: "test" });
+
+    test.addQuestion({
+      statement: "Question",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    const alternatives = test.listAlternativesByQuestionId(
+      test.questions[0].id
+    );
+    expect(alternatives.length).toEqual(3);
+  });
 });
