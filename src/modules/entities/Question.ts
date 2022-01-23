@@ -15,6 +15,7 @@ interface IAlternativeValues {
   isCorrect: boolean;
 }
 interface IQuestionValues {
+  id?: string;
   statement: string;
   alternatives: IAlternativeValues[] | [];
 }
@@ -22,7 +23,6 @@ interface IQuestionValues {
 class Question extends Entity<IQuestionProps> {
   private constructor(props: IQuestionProps, id?: string) {
     super(props, id);
-    this.props.alternatives = [];
   }
 
   get statement(): string {
@@ -44,7 +44,13 @@ class Question extends Entity<IQuestionProps> {
   }
 
   static create(props: IQuestionProps, id?: string): Question {
-    return new Question(props, id);
+    return new Question(
+      {
+        statement: props.statement,
+        alternatives: props.alternatives || [],
+      },
+      id
+    );
   }
 
   private alternativeAlreadyExists(alternative: Alternative) {
