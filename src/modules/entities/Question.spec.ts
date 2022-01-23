@@ -79,4 +79,20 @@ describe("Entity - Question", () => {
       'Alternative "Alternative Correct 1" already exists'
     );
   });
+
+  it("should count how many correct alternatives there are", () => {
+    const question = Question.create({
+      statement: "Question Remove Alternative",
+    });
+    question.includeCorrectAlternatives([
+      "Alternative Correct 1",
+      "Alternative Correct 2",
+    ]);
+    question.includeIncorrectAlternatives([
+      "Alternative Incorrect 1",
+      "Alternative Incorrect 2",
+    ]);
+
+    expect(question.countCorrectAlternatives()).toEqual(2);
+  });
 });
