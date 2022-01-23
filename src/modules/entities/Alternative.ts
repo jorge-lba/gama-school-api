@@ -1,24 +1,20 @@
-import { Entity } from "../../core/domain/Entity";
+class Alternative {
+  private readonly text: string;
 
-interface IAlternativeProps {
-  text: string;
-}
-
-class Alternative extends Entity<IAlternativeProps> {
-  private constructor(props: IAlternativeProps, id?: string) {
-    super(props, id);
+  private constructor(text: string) {
+    this.text = text;
   }
 
-  get text(): string {
-    return this.props.text;
+  get value(): string {
+    return this.text;
   }
 
-  static create(props: IAlternativeProps, id?: string): Alternative {
-    return new Alternative(props, id);
+  static create(text: string): Alternative {
+    return new Alternative(text);
   }
 
-  equalsText(alternative: Alternative): boolean {
-    return this.text === alternative.text;
+  equals(alternative: Alternative): boolean {
+    return this.text === alternative.value;
   }
 }
 

@@ -30,15 +30,14 @@ class Question extends Entity<IQuestionProps> {
 
   private alternativeAlreadyExists(alternative: Alternative) {
     if (
-      this.alternatives.find((item) =>
-        item.alternative.equalsText(alternative)
-      ) !== undefined
+      this.alternatives.find((item) => item.alternative.equals(alternative)) !==
+      undefined
     )
-      throw new Error(`Alternative "${alternative.text}" already exists`);
+      throw new Error(`Alternative "${alternative.value}" already exists`);
   }
 
   private includeAlternative(text: string, isCorrect: boolean): void {
-    const alternative = Alternative.create({ text });
+    const alternative = Alternative.create(text);
 
     this.alternativeAlreadyExists(alternative);
 

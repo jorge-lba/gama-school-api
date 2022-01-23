@@ -2,14 +2,15 @@ import { Alternative } from "./Alternative";
 
 describe("Entity - Alternative", () => {
   it("should be create a new alternative", () => {
-    const alternative = Alternative.create({ text: "Alternative" });
+    const alternative = Alternative.create("Alternative");
 
-    expect(alternative.id).toEqual(expect.any(String));
+    expect(alternative.value).toEqual("Alternative");
   });
 
-  it("should be create a new alternative and contain a text", () => {
-    const alternative = Alternative.create({ text: "Alternative" });
+  it("should compare two alternatives", () => {
+    const firstAlternative = Alternative.create("Alternative");
+    const secondAlternative = Alternative.create("Alternative");
 
-    expect(alternative.text).toEqual("Alternative");
+    expect(firstAlternative.equals(secondAlternative)).toBeTruthy();
   });
 });

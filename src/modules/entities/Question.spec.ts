@@ -21,9 +21,9 @@ describe("Entity - Question", () => {
     const [first, second] = question.alternatives;
     expect(question.alternatives.length).toEqual(2);
     expect(second.alternative.equals(first.alternative)).toBeFalsy();
-    expect(first.alternative.text).toEqual("Alternative 1");
+    expect(first.alternative.value).toEqual("Alternative 1");
     expect(first.isCorrect).toBeFalsy();
-    expect(second.alternative.text).toEqual("Alternative 2");
+    expect(second.alternative.value).toEqual("Alternative 2");
     expect(second.isCorrect).toBeFalsy();
   });
 
@@ -38,9 +38,9 @@ describe("Entity - Question", () => {
     const [first, second] = question.alternatives;
     expect(question.alternatives.length).toEqual(2);
     expect(second.alternative.equals(first.alternative)).toBeFalsy();
-    expect(first.alternative.text).toEqual("Alternative Correct 1");
+    expect(first.alternative.value).toEqual("Alternative Correct 1");
     expect(first.isCorrect).toBeTruthy();
-    expect(second.alternative.text).toEqual("Alternative Correct 2");
+    expect(second.alternative.value).toEqual("Alternative Correct 2");
     expect(second.isCorrect).toBeTruthy();
   });
 
