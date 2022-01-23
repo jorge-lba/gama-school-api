@@ -64,6 +64,10 @@ class Test extends Entity<ITestProps> {
     const question = this.questions.find((item) => item.id === id);
     return question?.alternatives || [];
   }
+
+  countQuestions(): number {
+    return this.props.questions?.length || 0;
+  }
 }
 
 export { Test };

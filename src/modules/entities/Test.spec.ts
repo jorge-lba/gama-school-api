@@ -84,4 +84,22 @@ describe("Entity - Test", () => {
     );
     expect(alternatives.length).toEqual(3);
   });
+
+  it("should count how many question there are", () => {
+    const test = Test.create({ title: "test" });
+
+    test.addQuestion({
+      statement: "Question",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    test.addQuestion({
+      statement: "Question 2",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    expect(test.countQuestions()).toEqual(2);
+  });
 });
