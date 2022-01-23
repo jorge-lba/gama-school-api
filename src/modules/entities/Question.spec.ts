@@ -95,4 +95,20 @@ describe("Entity - Question", () => {
 
     expect(question.countCorrectAlternatives()).toEqual(2);
   });
+
+  it("should count how many incorrect alternatives there are", () => {
+    const question = Question.create({
+      statement: "Question Remove Alternative",
+    });
+    question.includeCorrectAlternatives([
+      "Alternative Correct 1",
+      "Alternative Correct 2",
+    ]);
+    question.includeIncorrectAlternatives([
+      "Alternative Incorrect 1",
+      "Alternative Incorrect 2",
+    ]);
+
+    expect(question.countIncorrectAlternatives()).toEqual(2);
+  });
 });
