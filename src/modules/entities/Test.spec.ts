@@ -102,4 +102,31 @@ describe("Entity - Test", () => {
 
     expect(test.countQuestions()).toEqual(2);
   });
+
+  it("should get values from a test", () => {
+    const test = Test.create({ title: "test" });
+
+    test.addQuestion({
+      statement: "Question",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    expect(test.values).toEqual(
+      expect.objectContaining({
+        title: "test",
+        questions: expect.arrayContaining([
+          expect.objectContaining({
+            statement: "Question",
+            alternatives: expect.arrayContaining([
+              expect.objectContaining({
+                text: "Alternative Correct",
+                isCorrect: true,
+              }),
+            ]),
+          }),
+        ]),
+      })
+    );
+  });
 });
