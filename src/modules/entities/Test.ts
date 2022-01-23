@@ -52,6 +52,13 @@ class Test extends Entity<ITestProps> {
 
     this.props.questions?.push(newQuestion);
   }
+
+  removeQuestionById(id: string): void {
+    this.props.questions?.splice(
+      this.props.questions?.findIndex((item) => item.id === id),
+      1
+    );
+  }
 }
 
 export { Test };
