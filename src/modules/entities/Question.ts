@@ -1,13 +1,22 @@
 import { Entity } from "../../core/domain/Entity";
 import { Alternative } from "./Alternative";
 
-interface IAlternativeProps {
+interface IAlternative {
   alternative: Alternative;
   isCorrect: boolean;
 }
 interface IQuestionProps {
   statement: string;
-  alternatives?: IAlternativeProps[];
+  alternatives?: IAlternative[];
+}
+
+interface IAlternativeValues {
+  text: string;
+  isCorrect: boolean;
+}
+interface IQuestionValues {
+  statement: string;
+  alternatives: IAlternativeValues[] | [];
 }
 
 class Question extends Entity<IQuestionProps> {
@@ -20,8 +29,18 @@ class Question extends Entity<IQuestionProps> {
     return this.props.statement;
   }
 
-  get alternatives(): IAlternativeProps[] {
+  get alternatives(): IAlternative[] {
     return this.props.alternatives || [];
+  }
+
+  get values(): IQuestionValues {
+    return {
+      statement: this.statement,
+      alternatives: this.alternatives.map((item) => ({
+        text: item.alternative.value,
+        isCorrect: item.isCorrect,
+      })),
+    };
   }
 
   static create(props: IQuestionProps, id?: string): Question {
@@ -79,4 +98,4 @@ class Question extends Entity<IQuestionProps> {
   }
 }
 
-export { Question, IAlternativeProps };
+export { Question, IAlternativeValues, IAlternative };
