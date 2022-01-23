@@ -73,6 +73,10 @@ class Question extends Entity<IQuestionProps> {
   countCorrectAlternatives(): number {
     return this.alternatives.filter((item) => item.isCorrect).length;
   }
+
+  countIncorrectAlternatives(): number {
+    return this.alternatives.filter((item) => !item.isCorrect).length;
+  }
 }
 
 export { Question, IAlternativeProps };
