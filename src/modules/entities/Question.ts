@@ -98,4 +98,4 @@ class Question extends Entity<IQuestionProps> {
   }
 }
 
-export { Question, IAlternativeValues, IAlternative };
+export { Question, IAlternativeValues, IAlternative, IQuestionValues };

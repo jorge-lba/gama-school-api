@@ -1,5 +1,5 @@
 import { Entity } from "../../core/domain/Entity";
-import { IAlternativeProps, Question } from "./Question";
+import { IAlternative, IQuestionValues, Question } from "./Question";
 
 interface ITestProps {
   title: string;
@@ -10,6 +10,11 @@ interface IAddQuestionProps {
   statement: string;
   correctAlternatives: string[];
   incorrectAlternatives: string[];
+}
+
+interface ITestValues {
+  title: string;
+  questions?: IQuestionValues[];
 }
 
 class Test extends Entity<ITestProps> {
@@ -24,6 +29,13 @@ class Test extends Entity<ITestProps> {
 
   get questions(): Question[] {
     return this.props.questions || [];
+  }
+
+  get values(): ITestValues {
+    return {
+      title: this.title,
+      questions: this.questions.map((item) => item.values),
+    };
   }
 
   static create(props: ITestProps, id?: string): Test {
@@ -60,7 +72,7 @@ class Test extends Entity<ITestProps> {
     );
   }
 
-  listAlternativesByQuestionId(id: string): IAlternativeProps[] {
+  listAlternativesByQuestionId(id: string): IAlternative[] {
     const question = this.questions.find((item) => item.id === id);
     return question?.alternatives || [];
   }
