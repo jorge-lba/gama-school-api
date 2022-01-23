@@ -46,4 +46,27 @@ describe("Entity - Test", () => {
 
     expect(addQuestion).toThrowError('Question "Question" already exists');
   });
+
+  it("should be remove a question by id in test", () => {
+    const test = Test.create({ title: "test" });
+
+    test.addQuestion({
+      statement: "Question",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    test.addQuestion({
+      statement: "Question 2",
+      correctAlternatives: ["Alternative Correct"],
+      incorrectAlternatives: ["Alternative 3", "Alternative 4"],
+    });
+
+    test.removeQuestionById(test.questions[0].id);
+
+    const [question] = test?.questions;
+
+    expect(test.questions?.length).toEqual(1);
+    expect(question.statement).toEqual("Question 2");
+  });
 });
