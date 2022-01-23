@@ -13,6 +13,7 @@ interface IAddQuestionProps {
 }
 
 interface ITestValues {
+  id?: string;
   title: string;
   questions?: IQuestionValues[];
 }
@@ -20,7 +21,6 @@ interface ITestValues {
 class Test extends Entity<ITestProps> {
   private constructor(props: ITestProps, id?: string) {
     super(props, id);
-    this.props.questions = [];
   }
 
   get title(): string {
@@ -39,7 +39,13 @@ class Test extends Entity<ITestProps> {
   }
 
   static create(props: ITestProps, id?: string): Test {
-    return new Test(props, id);
+    return new Test(
+      {
+        title: props.title,
+        questions: props.questions || [],
+      },
+      id
+    );
   }
 
   questionAlreadyExists(question: Question) {
@@ -82,4 +88,4 @@ class Test extends Entity<ITestProps> {
   }
 }
 
-export { Test };
+export { Test, ITestValues };
