@@ -1,5 +1,5 @@
 import { Entity } from "../../core/domain/Entity";
-import { Question } from "./Question";
+import { IAlternativeProps, Question } from "./Question";
 
 interface ITestProps {
   title: string;
@@ -58,6 +58,11 @@ class Test extends Entity<ITestProps> {
       this.props.questions?.findIndex((item) => item.id === id),
       1
     );
+  }
+
+  listAlternativesByQuestionId(id: string): IAlternativeProps[] {
+    const question = this.questions.find((item) => item.id === id);
+    return question?.alternatives || [];
   }
 }
 
