@@ -1,12 +1,9 @@
-import { PersistenceAlternativeDTO } from "./PercistenceAlternative";
+import { PersistenceAlternativeDTO } from "./PersistenceAlternative";
 
 interface PersistenceQuestionDTO {
   id: string;
   statement: string;
-  alternatives: {
-    alternative: PersistenceAlternativeDTO;
-    isCorrect: boolean;
-  }[];
+  alternatives: PersistenceAlternativeDTO[];
 }
 
 export { PersistenceQuestionDTO };
