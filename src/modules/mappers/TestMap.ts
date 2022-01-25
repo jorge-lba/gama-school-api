@@ -1,4 +1,5 @@
 import { PersistenceTestDTO } from "../DTOs/PersistenceTest";
+import { ResponseTestDTO } from "../DTOs/ResponseTest";
 import { Test } from "../entities/Test";
 import { QuestionMap } from "./QuestionMap";
 
@@ -20,6 +21,14 @@ class TestMap {
       questions: entity.questions.map((item) =>
         QuestionMap.toPersistence(item)
       ),
+    };
+  }
+
+  static toResponse(entity: Test): ResponseTestDTO {
+    return {
+      id: entity.id,
+      title: entity.title,
+      questions: entity.questions.map((item) => QuestionMap.toResponse(item)),
     };
   }
 }
