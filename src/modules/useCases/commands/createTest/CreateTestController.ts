@@ -1,5 +1,9 @@
 import { Controller } from "../../../../core/infra/Controller";
-import { fail, HttpResponse, ok } from "../../../../core/infra/HttpResponse";
+import {
+  fail,
+  HttpResponse,
+  created,
+} from "../../../../core/infra/HttpResponse";
 import { CreateTestDTO } from "../../../DTOs/CreateTest";
 import { CreateTest } from "./CreateTest";
 
@@ -12,7 +16,7 @@ class CreateTestController implements Controller {
     try {
       const result = await this.createTest.execute({ title, questions });
 
-      return ok({
+      return created({
         message: "Test created",
         id: result.id,
       });
