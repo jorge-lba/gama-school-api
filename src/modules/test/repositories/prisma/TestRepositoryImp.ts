@@ -1,25 +1,20 @@
-import {
-  Prisma,
-  Test as TestModel,
-  Alternative as AlternativeModel,
-} from "@prisma/client";
+import { Prisma, Test as TestModel } from "@prisma/client";
 
 import { PrismaDatabase } from "../../../../infra/prisma";
+import { PersistenceQuestionDTO } from "../../DTOs/PersistenceQuestion";
 import { Test } from "../../entities/Test";
 import { TestMap } from "../../mappers/TestMap";
 import { TestRepository } from "../TestRepository";
 
 class TestRepositoryImp implements TestRepository {
   private testModel: Prisma.TestDelegate<TestModel>;
-  private alternativeModel: Prisma.AlternativeDelegate<AlternativeModel>;
 
   constructor(prismaDatabase: PrismaDatabase) {
     this.testModel = prismaDatabase.prisma.test;
-    this.alternativeModel = prismaDatabase.prisma.alternative;
   }
 
-  getTestById(testId: string): Promise<Test> {
-    const test = this.testModel.findUnique({
+  async getTestById(testId: string): Promise<Test> {
+    const test = await this.testModel.findUnique({
       where: {
         id: testId,
       },
@@ -36,30 +31,45 @@ class TestRepositoryImp implements TestRepository {
       },
     });
 
-    return test.then((test) =>
-      TestMap.toDomain({
-        id: test!.id,
-        title: test!.title,
-        questions: test!.questions.map((question) => ({
-          id: question.question.id,
-          statement: question.question.statement,
-          alternatives: question.question.alternatives.map((alternative) => ({
-            id: alternative.id,
-            text: alternative.text,
-            isCorrect: alternative.isCorrect,
-            questionId: alternative.questionId,
-          })),
+    return TestMap.toDomain({
+      id: test!.id,
+      title: test!.title,
+      questions: test!.questions.map((question) => ({
+        id: question.question.id,
+        statement: question.question.statement,
+        alternatives: question.question.alternatives.map((alternative) => ({
+          id: alternative.id,
+          text: alternative.text,
+          isCorrect: alternative.isCorrect,
+          questionId: alternative.questionId,
         })),
-      })
-    );
+      })),
+    });
   }
 
-  exists(t: Test): Promise<boolean> {
-    throw new Error("Method not implemented.");
+  async exists(test: Test): Promise<boolean> {
+    const exists = await this.testModel.findUnique({
+      where: {
+        id: test.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return !!exists;
   }
 
   delete(t: Test): Promise<any> {
     throw new Error("Method not implemented.");
+  }
+
+  private makeQueryToCreateAlternatives(question: PersistenceQuestionDTO) {
+    return question.alternatives.map((alternative) => ({
+      id: alternative.id,
+      text: alternative.text,
+      isCorrect: alternative.isCorrect,
+    }));
   }
 
   async save(test: Test): Promise<{ id: string }> {
@@ -69,27 +79,63 @@ class TestRepositoryImp implements TestRepository {
         create: {
           id: question.id,
           statement: question.statement,
+          alternatives: {
+            create: this.makeQueryToCreateAlternatives(question),
+          },
         },
       },
     }));
-    const persistence = await this.testModel.create({
-      data: {
-        id: value.id,
-        title: value.title,
-        questions: {
-          create: questionConnections,
+
+    const testAlreadyExists = await this.exists(test);
+
+    if (testAlreadyExists) {
+      const connectOrCreate = value.questions.map((question) => ({
+        where: {
+          testId_questionId: {
+            questionId: question.id,
+            testId: test.id,
+          },
         },
-      },
-    });
+        create: {
+          question: {
+            create: {
+              id: question.id,
+              statement: question.statement,
+              alternatives: {
+                create: this.makeQueryToCreateAlternatives(question),
+              },
+            },
+          },
+        },
+        update: {
+          question: { connect: { id: question.id } },
+        },
+      }));
 
-    const alternatives = value.questions
-      .map((question) => question.alternatives)
-      .flat();
-    await this.alternativeModel.createMany({
-      data: alternatives,
-    });
+      const persistence = await this.testModel.update({
+        where: {
+          id: test.id,
+        },
+        data: {
+          title: value.title,
+          questions: { upsert: connectOrCreate },
+        },
+      });
 
-    return { id: persistence.id };
+      return { id: persistence.id };
+    } else {
+      const persistence = await this.testModel.create({
+        data: {
+          id: value.id,
+          title: value.title,
+          questions: {
+            create: questionConnections,
+          },
+        },
+      });
+
+      return { id: persistence.id };
+    }
   }
 }
 
