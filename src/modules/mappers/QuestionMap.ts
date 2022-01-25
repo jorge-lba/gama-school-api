@@ -1,4 +1,5 @@
 import { PersistenceQuestionDTO } from "../DTOs/PersistenceQuestion";
+import { ResponseQuestionDTO } from "../DTOs/ResponseTest";
 import { Alternative } from "../entities/Alternative";
 import { Question } from "../entities/Question";
 
@@ -29,6 +30,14 @@ class QuestionMap {
         ...alternative.value,
         questionId: entity.id,
       })),
+    };
+  }
+
+  static toResponse(entity: Question): ResponseQuestionDTO {
+    return {
+      id: entity.id,
+      statement: entity.statement,
+      alternatives: entity.alternatives.map((alternative) => alternative.value),
     };
   }
 }
