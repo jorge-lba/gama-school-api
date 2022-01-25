@@ -1,7 +1,7 @@
-import { UseCase } from "../../../core/domain/UseCase";
-import { CreateTestDTO } from "../../DTOs/CreateTest";
-import { Test } from "../../entities/Test";
-import { TestRepository } from "../../repositories/TestRepository";
+import { UseCase } from "../../../../core/domain/UseCase";
+import { CreateTestDTO } from "../../../DTOs/CreateTest";
+import { Test } from "../../../entities/Test";
+import { TestRepository } from "../../../repositories/TestRepository";
 
 interface Response {
   id: string;

@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Test {
+  id        String            @id @db.Uuid
+  title     String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  questions TestToQuestions[]
+
+  @@map("test")
+}
+
+model Question {
+  id           String            @id @db.Uuid
+  statement    String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  tests        TestToQuestions[]
+  alternatives Alternative[]
+
+  @@map("question")
+}
+
+model Alternative {
+  id         String   @id @db.Uuid
+  text       String
+  questionId String   @db.Uuid
+  isCorrect  Boolean  @default(false)
+  question   Question @relation(fields: [questionId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("alternative")
+}
+
+model TestToQuestions {
+  testId     String   @db.Uuid
+  test       Test     @relation(fields: [testId], references: [id])
+  questionId String   @db.Uuid
+  question   Question @relation(fields: [questionId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([testId, questionId])
+  @@map("tests_to_questions")
+}

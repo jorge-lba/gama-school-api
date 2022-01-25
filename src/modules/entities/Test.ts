@@ -1,5 +1,6 @@
 import { Entity } from "../../core/domain/Entity";
-import { IAlternative, IQuestionValues, Question } from "./Question";
+import { Alternative } from "./Alternative";
+import { IQuestionValues, Question } from "./Question";
 
 interface ITestProps {
   title: string;
@@ -78,7 +79,7 @@ class Test extends Entity<ITestProps> {
     );
   }
 
-  listAlternativesByQuestionId(id: string): IAlternative[] {
+  listAlternativesByQuestionId(id: string): Alternative[] {
     const question = this.questions.find((item) => item.id === id);
     return question?.alternatives || [];
   }

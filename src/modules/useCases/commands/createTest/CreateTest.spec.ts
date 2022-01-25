@@ -1,7 +1,7 @@
-import { UseCase } from "../../../core/domain/UseCase";
-import { CreateTestDTO } from "../../DTOs/CreateTest";
-import { TestRepositoryInMemory } from "../../repositories/inMemory/TestRepositoryInMemory";
-import { TestRepository } from "../../repositories/TestRepository";
+import { UseCase } from "../../../../core/domain/UseCase";
+import { CreateTestDTO } from "../../../DTOs/CreateTest";
+import { TestRepositoryInMemory } from "../../../repositories/inMemory/TestRepositoryInMemory";
+import { TestRepository } from "../../../repositories/TestRepository";
 import { CreateTest } from "./CreateTest";
 
 describe("Use Case - Create Test", () => {
