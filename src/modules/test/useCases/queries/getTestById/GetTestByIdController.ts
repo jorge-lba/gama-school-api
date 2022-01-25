@@ -1,5 +1,5 @@
-import { Controller } from "../../../../core/infra/Controller";
-import { fail, HttpResponse, ok } from "../../../../core/infra/HttpResponse";
+import { Controller } from "../../../../../core/infra/Controller";
+import { fail, HttpResponse, ok } from "../../../../../core/infra/HttpResponse";
 import { TestMap } from "../../../mappers/TestMap";
 import { GetTestById } from "./GetTestById";
 

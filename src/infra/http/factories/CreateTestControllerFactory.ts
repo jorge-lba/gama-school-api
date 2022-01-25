@@ -1,7 +1,7 @@
 import { Controller } from "../../../core/infra/Controller";
-import { TestRepositoryImp } from "../../../modules/repositories/prisma/TestRepositoryImp";
-import { CreateTest } from "../../../modules/useCases/commands/createTest/CreateTest";
-import { CreateTestController } from "../../../modules/useCases/commands/createTest/CreateTestController";
+import { TestRepositoryImp } from "../../../modules/test/repositories/prisma/TestRepositoryImp";
+import { CreateTest } from "../../../modules/test/useCases/commands/createTest/CreateTest";
+import { CreateTestController } from "../../../modules/test/useCases/commands/createTest/CreateTestController";
 import { PrismaDatabase } from "../../prisma";
 
 function makeCreateTestController(): Controller {

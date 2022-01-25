@@ -1,4 +1,4 @@
-import { UseCase } from "../../../../core/domain/UseCase";
+import { UseCase } from "../../../../../core/domain/UseCase";
 import { CreateTestDTO } from "../../../DTOs/CreateTest";
 import { Test } from "../../../entities/Test";
 import { TestRepository } from "../../../repositories/TestRepository";

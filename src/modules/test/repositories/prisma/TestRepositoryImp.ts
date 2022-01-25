@@ -4,7 +4,7 @@ import {
   Alternative as AlternativeModel,
 } from "@prisma/client";
 
-import { PrismaDatabase } from "../../../infra/prisma";
+import { PrismaDatabase } from "../../../../infra/prisma";
 import { Test } from "../../entities/Test";
 import { TestMap } from "../../mappers/TestMap";
 import { TestRepository } from "../TestRepository";

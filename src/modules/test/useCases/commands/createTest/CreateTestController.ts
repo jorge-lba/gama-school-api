@@ -1,9 +1,9 @@
-import { Controller } from "../../../../core/infra/Controller";
+import { Controller } from "../../../../../core/infra/Controller";
 import {
   fail,
   HttpResponse,
   created,
-} from "../../../../core/infra/HttpResponse";
+} from "../../../../../core/infra/HttpResponse";
 import { CreateTestDTO } from "../../../DTOs/CreateTest";
 import { CreateTest } from "./CreateTest";
 

@@ -1,7 +1,7 @@
 import { Controller } from "../../../core/infra/Controller";
-import { TestRepositoryImp } from "../../../modules/repositories/prisma/TestRepositoryImp";
-import { GetTestById } from "../../../modules/useCases/commands/getTestById/GetTestById";
-import { GetTestByIdController } from "../../../modules/useCases/commands/getTestById/GetTestByIdController";
+import { TestRepositoryImp } from "../../../modules/test/repositories/prisma/TestRepositoryImp";
+import { GetTestById } from "../../../modules/test/useCases/queries/getTestById/GetTestById";
+import { GetTestByIdController } from "../../../modules/test/useCases/queries/getTestById/GetTestByIdController";
 import { PrismaDatabase } from "../../prisma";
 
 function makeGetTestByIdController(): Controller {

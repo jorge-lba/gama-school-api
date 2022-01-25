@@ -1,6 +1,6 @@
 import { PrismaDatabase } from "../../infra/prisma";
-import { Test } from "../../modules/entities/Test";
-import { TestRepositoryImp } from "../../modules/repositories/prisma/TestRepositoryImp";
+import { Test } from "../../modules/test/entities/Test";
+import { TestRepositoryImp } from "../../modules/test/repositories/prisma/TestRepositoryImp";
 import { request } from "../http/request";
 
 describe("Integration - Get Test By Id", () => {
