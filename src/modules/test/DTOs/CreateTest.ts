@@ -9,4 +9,4 @@ interface CreateTestDTO {
   questions?: CreateQuestionDTO[];
 }
 
-export { CreateTestDTO };
+export { CreateTestDTO, CreateQuestionDTO };
