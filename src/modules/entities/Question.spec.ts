@@ -20,11 +20,11 @@ describe("Entity - Question", () => {
 
     const [first, second] = question.alternatives;
     expect(question.alternatives.length).toEqual(2);
-    expect(second.alternative.equals(first.alternative)).toBeFalsy();
-    expect(first.alternative.value).toEqual("Alternative 1");
-    expect(first.isCorrect).toBeFalsy();
-    expect(second.alternative.value).toEqual("Alternative 2");
-    expect(second.isCorrect).toBeFalsy();
+    expect(second.equals(first)).toBeFalsy();
+    expect(first.value.text).toEqual("Alternative 1");
+    expect(first.value.isCorrect).toBeFalsy();
+    expect(second.value.text).toEqual("Alternative 2");
+    expect(second.value.isCorrect).toBeFalsy();
   });
 
   it("should add correct alternatives in a question", () => {
@@ -37,11 +37,11 @@ describe("Entity - Question", () => {
 
     const [first, second] = question.alternatives;
     expect(question.alternatives.length).toEqual(2);
-    expect(second.alternative.equals(first.alternative)).toBeFalsy();
-    expect(first.alternative.value).toEqual("Alternative Correct 1");
-    expect(first.isCorrect).toBeTruthy();
-    expect(second.alternative.value).toEqual("Alternative Correct 2");
-    expect(second.isCorrect).toBeTruthy();
+    expect(second.equals(first)).toBeFalsy();
+    expect(first.value.text).toEqual("Alternative Correct 1");
+    expect(first.value.isCorrect).toBeTruthy();
+    expect(second.value.text).toEqual("Alternative Correct 2");
+    expect(second.value.isCorrect).toBeTruthy();
   });
 
   it("should be remove alternative", () => {
@@ -58,7 +58,7 @@ describe("Entity - Question", () => {
     ]);
     const alternatives = question.alternatives;
 
-    question.removeAlternative(alternatives[0].alternative);
+    question.removeAlternative(alternatives[0]);
 
     expect(question.alternatives.length).toEqual(3);
   });
@@ -120,13 +120,16 @@ describe("Entity - Question", () => {
     question.includeIncorrectAlternatives(["Alternative Incorrect 1"]);
 
     expect(question.values).toEqual({
+      id: expect.any(String),
       statement: "Question Remove Alternative",
       alternatives: [
         {
+          id: expect.any(String),
           text: "Alternative Correct 1",
           isCorrect: true,
         },
         {
+          id: expect.any(String),
           text: "Alternative Incorrect 1",
           isCorrect: false,
         },

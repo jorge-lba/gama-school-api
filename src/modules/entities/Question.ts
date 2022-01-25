@@ -1,13 +1,9 @@
 import { Entity } from "../../core/domain/Entity";
 import { Alternative } from "./Alternative";
 
-interface IAlternative {
-  alternative: Alternative;
-  isCorrect: boolean;
-}
 interface IQuestionProps {
   statement: string;
-  alternatives?: IAlternative[];
+  alternatives?: Alternative[];
 }
 
 interface IAlternativeValues {
@@ -15,6 +11,7 @@ interface IAlternativeValues {
   isCorrect: boolean;
 }
 interface IQuestionValues {
+  id?: string;
   statement: string;
   alternatives: IAlternativeValues[] | [];
 }
@@ -22,48 +19,47 @@ interface IQuestionValues {
 class Question extends Entity<IQuestionProps> {
   private constructor(props: IQuestionProps, id?: string) {
     super(props, id);
-    this.props.alternatives = [];
   }
 
   get statement(): string {
     return this.props.statement;
   }
 
-  get alternatives(): IAlternative[] {
+  get alternatives(): Alternative[] {
     return this.props.alternatives || [];
   }
 
   get values(): IQuestionValues {
     return {
+      id: this.id,
       statement: this.statement,
-      alternatives: this.alternatives.map((item) => ({
-        text: item.alternative.value,
-        isCorrect: item.isCorrect,
-      })),
+      alternatives: this.alternatives.map((alternative) => alternative.value),
     };
   }
 
   static create(props: IQuestionProps, id?: string): Question {
-    return new Question(props, id);
+    return new Question(
+      {
+        statement: props.statement,
+        alternatives: props.alternatives || [],
+      },
+      id
+    );
   }
 
   private alternativeAlreadyExists(alternative: Alternative) {
     if (
-      this.alternatives.find((item) => item.alternative.equals(alternative)) !==
-      undefined
+      this.alternatives.find((item) => item.equals(alternative)) !== undefined
     )
-      throw new Error(`Alternative "${alternative.value}" already exists`);
+      throw new Error(`Alternative "${alternative.value.text}" already exists`);
   }
 
   private includeAlternative(text: string, isCorrect: boolean): void {
-    const alternative = Alternative.create(text);
+    const alternative = Alternative.create(text, isCorrect);
 
     this.alternativeAlreadyExists(alternative);
 
-    this.props.alternatives?.push({
-      alternative,
-      isCorrect,
-    });
+    this.props.alternatives?.push(alternative);
   }
 
   includeIncorrectAlternatives(alternatives: string[]): void {
@@ -80,7 +76,7 @@ class Question extends Entity<IQuestionProps> {
 
   removeAlternative(alternative: Alternative): void {
     const index = this.alternatives.findIndex((item) =>
-      item.alternative.equals(alternative)
+      item.equals(alternative)
     );
     this.props.alternatives?.splice(index, 1);
   }
@@ -90,12 +86,12 @@ class Question extends Entity<IQuestionProps> {
   }
 
   countCorrectAlternatives(): number {
-    return this.alternatives.filter((item) => item.isCorrect).length;
+    return this.alternatives.filter((item) => item.value.isCorrect).length;
   }
 
   countIncorrectAlternatives(): number {
-    return this.alternatives.filter((item) => !item.isCorrect).length;
+    return this.alternatives.filter((item) => !item.value.isCorrect).length;
   }
 }
 
-export { Question, IAlternativeValues, IAlternative, IQuestionValues };
+export { Question, IAlternativeValues, IQuestionValues };
