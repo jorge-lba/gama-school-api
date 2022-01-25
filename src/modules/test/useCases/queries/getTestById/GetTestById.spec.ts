@@ -1,4 +1,4 @@
-import { UseCase } from "../../../../core/domain/UseCase";
+import { UseCase } from "../../../../../core/domain/UseCase";
 import { Test } from "../../../entities/Test";
 import { TestRepositoryInMemory } from "../../../repositories/inMemory/TestRepositoryInMemory";
 import { TestRepository } from "../../../repositories/TestRepository";
