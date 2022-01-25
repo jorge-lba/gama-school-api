@@ -10,10 +10,10 @@ function ok<T>(dto?: T): HttpResponse {
   };
 }
 
-function created(): HttpResponse {
+function created<T = undefined>(body: T): HttpResponse {
   return {
     statusCode: 201,
-    body: undefined,
+    body,
   };
 }
 
