@@ -12,7 +12,7 @@ services:
       - POSTFRES_HOST=localhost
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres 
-      - POSTGRES_DB=gama-academy
+      - POSTGRES_MULTIPLE_DATABASES=gama-academy, gama-academy-test
     volumes: 
       - pgdata:/data/postgres
     networks:
