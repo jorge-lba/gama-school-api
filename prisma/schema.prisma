@@ -54,3 +54,14 @@ model TestToQuestions {
   @@id([testId, questionId])
   @@map("tests_to_questions")
 }
+model Account {
+  id        String   @id @db.Uuid
+  name      String   
+  email     String   @unique
+  password  String   
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("account")
+}
