@@ -27,7 +27,8 @@ app.use(
 app.use(router);
 
 app.use(
-  express.static(path.join(__dirname, "../../../public"), {
+  "/public",
+  express.static(path.join(process.cwd(), "/public"), {
     index: false,
   })
 );
