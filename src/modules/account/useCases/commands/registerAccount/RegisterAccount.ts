@@ -1,7 +1,7 @@
 import { UseCase } from "../../../../../core/domain/UseCase";
 import { CreateAccountDTO } from "../../../DTOs/CreateAccount";
 import { Account } from "../../../entities/Account";
-import { JWT } from "../../../entities/JWT";
+import { JWTAccount } from "../../../entities/JWT";
 import { AccountRepository } from "../../../repositories/AccountRepository";
 
 interface Response {
@@ -24,7 +24,7 @@ class RegisterAccount implements UseCase<CreateAccountDTO> {
       throw new Error("Account already exists");
     }
 
-    const { token } = JWT.signAccount(account);
+    const { token } = JWTAccount.signAccount(account);
 
     const wasSaved = await this.accountRepository.save(account);
 
