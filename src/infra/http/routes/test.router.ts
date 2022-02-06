@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { adaptMiddleware } from "../../../core/infra/adapters/ExpressMifflewareAdapter";
+import { adaptMiddleware } from "../../../core/infra/adapters/ExpressMiddlewareAdapter";
 import { adaptRoute } from "../../../core/infra/adapters/ExpressRoutAdapter";
 import { makeAddTestQuestionsController } from "../factories/AddTestQuestionsController";
 import { makeCreateTestController } from "../factories/CreateTestControllerFactory";
