@@ -18,6 +18,16 @@ class AccountRepositoryInMemory implements AccountRepository {
     throw new Error("Method not implemented.");
   }
 
+  async findOneByEmail(email: string): Promise<Account | null> {
+    const account = this.accounts.find((item) => item.email === email);
+
+    if (!account) {
+      return null;
+    }
+
+    return AccountMap.toDomain(account);
+  }
+
   async save(account: Account): Promise<any> {
     this.accounts.push(AccountMap.toPersistence(account));
 

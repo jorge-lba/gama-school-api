@@ -36,6 +36,27 @@ class AccountRepositoryImp implements AccountRepository {
     throw new Error("Method not implemented.");
   }
 
+  async findOneByEmail(email: string): Promise<Account | null> {
+    const account = await this.accountModel.findFirst({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        verified: true,
+      },
+    });
+
+    if (!account) {
+      return null;
+    }
+
+    return AccountMap.toDomain(account);
+  }
+
   async save(account: Account): Promise<{ id: string }> {
     const value = AccountMap.toPersistence(account);
     const persistence = await this.accountModel.create({
