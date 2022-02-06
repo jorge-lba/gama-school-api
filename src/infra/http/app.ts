@@ -1,6 +1,7 @@
 import cors from "cors";
 import { config } from "dotenv-flow";
-import express from "express";
+import express, { Request, Response } from "express";
+import path from "path";
 import swaggerUi from "swagger-ui-express";
 
 import { openapiSpecification } from "./doc/swagger";
@@ -25,6 +26,22 @@ app.use(
 
 app.use(router);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+app.use(
+  "/public",
+  express.static(path.join(__dirname, "../../../public"), {
+    extensions: ["html"],
+    index: "index.html",
+  })
+);
+
+app.get("/docs", (request: Request, response: Response) => {
+  return response.sendFile(path.join(process.cwd(), "./public/index.html"));
+});
+
+app.use(
+  "/docs/swagger",
+  swaggerUi.serve,
+  swaggerUi.setup(openapiSpecification)
+);
 
 export { app };
