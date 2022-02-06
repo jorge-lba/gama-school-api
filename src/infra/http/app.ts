@@ -27,12 +27,16 @@ app.use(
 app.use(router);
 
 app.use(
-  "/public",
   express.static(path.join(__dirname, "../../../public"), {
-    extensions: ["html"],
-    index: "index.html",
+    index: false,
   })
 );
+
+app.get("/", (request: Request, response: Response) => {
+  return response.json({
+    message: "School Tests API",
+  });
+});
 
 app.get("/docs", (request: Request, response: Response) => {
   return response.sendFile(path.join(process.cwd(), "./public/index.html"));
