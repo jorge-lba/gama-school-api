@@ -13,6 +13,7 @@ class AccountMap {
         name,
         email,
         password,
+        passwordIsHashed: true,
       },
       id
     );
