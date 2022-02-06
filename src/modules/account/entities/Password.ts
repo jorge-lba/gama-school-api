@@ -29,13 +29,13 @@ class Password {
     return bcrypt.hashSync(this.password, 8);
   }
 
-  public async comparePassword(plainTextPassword: string): Promise<boolean> {
+  public comparePassword(plainTextPassword: string): boolean {
     let hashed: string;
 
     if (this.hashed) {
       hashed = this.password;
 
-      return await bcrypt.compare(plainTextPassword, hashed);
+      return bcrypt.compareSync(plainTextPassword, hashed);
     }
 
     return this.password === plainTextPassword;
