@@ -1,7 +1,7 @@
 import { Controller } from "../../../../../core/infra/Controller";
 import {
+  conflict,
   created,
-  fail,
   HttpResponse,
 } from "../../../../../core/infra/HttpResponse";
 import { RegisterAccount } from "./RegisterAccount";
@@ -19,7 +19,7 @@ class RegisterAccountController implements Controller {
         token: result.token,
       });
     } catch (error) {
-      return fail(error as Error);
+      return conflict(error as Error);
     }
   }
 }
