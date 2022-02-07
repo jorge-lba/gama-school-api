@@ -104,7 +104,13 @@ $ docker-compose up -d
 
 - [https://www.rahmai.xyz/docs](https://www.rahmai.xyz/docs)
 
+### Links para plugin e repositório para gerar a documentação no insomnia
+- [https://insomnia.rest/plugins/insomnia-plugin-documenter](Insomnia Plugin Documenter)
+- [https://www.npmjs.com/package/insomnia-documenter](Insomnia Documenter)
+
+
 <!-- LICENSE -->
+
 
 # Licença
 
