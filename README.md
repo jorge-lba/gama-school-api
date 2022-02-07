@@ -87,6 +87,10 @@ $ yarn prisma migrate dev ou npm run prisma migrate
 $ yarn dev ou npm run dev
 
 ```
+**obs.:** Para rodar o banco você pode utilizar o docker-compose com o seguinte comando
+```
+$ docker-compose up -d
+```
 
 ### Documentação insomnia
 
