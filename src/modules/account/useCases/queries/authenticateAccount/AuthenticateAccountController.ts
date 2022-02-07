@@ -1,5 +1,9 @@
 import { Controller } from "../../../../../core/infra/Controller";
-import { fail, HttpResponse, ok } from "../../../../../core/infra/HttpResponse";
+import {
+  conflict,
+  HttpResponse,
+  ok,
+} from "../../../../../core/infra/HttpResponse";
 import { AuthenticateAccount } from "./AutenticateAccount";
 
 class AuthenticateAccountController implements Controller {
@@ -17,7 +21,7 @@ class AuthenticateAccountController implements Controller {
         token: result.token,
       });
     } catch (error) {
-      return fail(error as Error);
+      return conflict(error as Error);
     }
   }
 }

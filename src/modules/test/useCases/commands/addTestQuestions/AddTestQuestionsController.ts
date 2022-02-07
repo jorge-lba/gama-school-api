@@ -1,8 +1,8 @@
 import { Controller } from "../../../../../core/infra/Controller";
 import {
-  fail,
   HttpResponse,
   created,
+  conflict,
 } from "../../../../../core/infra/HttpResponse";
 import { AddTestQuestions, CreateQuestions } from "./AddTestQuestions";
 
@@ -17,10 +17,10 @@ class AddTestQuestionsController implements Controller {
 
       return created({
         message: "Add test questions",
-        ids: result,
+        ...result,
       });
     } catch (error) {
-      return fail(error as Error);
+      return conflict(error as Error);
     }
   }
 }
