@@ -1,3 +1,5 @@
+import "../observability/datadog";
+import "../observability/datadog/trace";
 import cors from "cors";
 import { config } from "dotenv-flow";
 import express, { Request, Response } from "express";
