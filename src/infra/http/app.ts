@@ -1,14 +1,14 @@
-import "../observability/datadog";
-import "../observability/datadog/trace";
 import cors from "cors";
 import { config } from "dotenv-flow";
 import express, { Request, Response } from "express";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
 
+import { startDataDog } from "../observability/datadog";
 import { openapiSpecification } from "./doc/swagger";
 
 config({ silent: true });
+startDataDog();
 
 import { router } from './routes' // eslint-disable-line
 

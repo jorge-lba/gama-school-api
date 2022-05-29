@@ -1,5 +1,15 @@
+import tracer from "dd-trace";
 import StatsD from "hot-shots";
-const dogStatsD = new StatsD();
 
-// Increment a counter.
-dogStatsD.increment("page.views");
+import { datadogConfig } from "./datadogConfig";
+
+export function startDataDog() {
+  const dogStatsD = new StatsD();
+  dogStatsD.increment("page.views");
+
+  tracer.init({
+    env: datadogConfig.env,
+    profiling: datadogConfig.profiling,
+    logInjection: datadogConfig.logInjection,
+  });
+}
